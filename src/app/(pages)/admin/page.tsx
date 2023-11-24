@@ -122,7 +122,7 @@ const Admin = () => {
 						<span className='mb-1.5 block font-medium'>Welcome, Back!</span>
 						<h2 className='mb-9 text-2xl font-bold text-black sm:text-title-xl2'>Sign In to your Dashboard</h2>
 
-						<form>
+						<form onSubmit={onAdminLogin}>
 							<fieldset className='mb-4'>
 								<label className='mb-2.5 block font-medium text-black'>Username</label>
 								<div className='relative'>
