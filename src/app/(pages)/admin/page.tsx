@@ -6,7 +6,6 @@ import { FaUserShield, FaLock } from 'react-icons/fa';
 const Admin = () => {
 	const onAdminLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
-		// hell othere how are you doing
 	};
 
 	return (
