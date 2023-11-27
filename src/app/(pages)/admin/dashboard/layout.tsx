@@ -12,7 +12,7 @@ export default function DashboardLayout({
 		<section>
 			{/* Include shared UI here e.g. a header or sidebar */}
 			<Navbar/>
-            <Sidebar />
+         
 
 			{children}
 		</section>
