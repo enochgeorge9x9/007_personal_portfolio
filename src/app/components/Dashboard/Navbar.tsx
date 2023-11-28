@@ -6,11 +6,11 @@ import Sidebar from './Sidebar';
 const hoverStateStyle = 'h-8 w-8 rounded-full hover:bg-blue-300/[0.3]';
 
 const Navbar = () => {
-	const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(true);
+	const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false);
 	console.log('🚀 ~ file: Navbar.tsx:9 ~ Navbar ~ isNavbarOpen:', isNavbarOpen);
 
 	const onNavbarClick = () => {
-		// setIsNavbarOpen(!isNavbarOpen);
+		setIsNavbarOpen(!isNavbarOpen);
 	};
 
 	return (

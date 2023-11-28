@@ -4,21 +4,14 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
-import { MdAllInbox } from 'react-icons/md';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import { MdMarkEmailUnread } from 'react-icons/md';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import Logo from '@images/logo/logo-icon.svg';
 import Image from 'next/image';
 import { RxComponentPlaceholder } from 'react-icons/rx';
+import Disclosure from '@components/Disclosure';
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 interface Props {
 	isNavbarOpen: boolean;
@@ -26,36 +19,38 @@ interface Props {
 	window?: () => Window;
 }
 
-const MenuItems = {
+/*
+# TODO: Add these pages in the future
+Overview
+Analytics: { href: '/admin/analytics', icon: <RxComponentPlaceholder />, active: false },
+
+Management Section
+Blogs: { href: '/admin/blogs', icon: <RxComponentPlaceholder />, active: false },
+File: { href: '/admin/file', icon: <RxComponentPlaceholder />, active: false },
+*/
+
+const MenuItems: any = {
 	Overview: {
 		Dashboard: { href: '/admin/dashboard', icon: <RxComponentPlaceholder />, active: true },
-		Projects: { href: '/admin/dashboard', icon: <RxComponentPlaceholder />, active: false },
-		Blogs: { href: '/admin/dashboard', icon: <RxComponentPlaceholder />, active: false },
-		Analytics: { href: '/admin/dashboard', icon: <RxComponentPlaceholder />, active: false },
 	},
 	Management: {
-		Users: { href: '/admin/dashboard', icon: <RxComponentPlaceholder />, active: false },
-		Projects: { href: '/admin/dashboard', icon: <RxComponentPlaceholder />, active: false },
-		Blogs: { href: '/admin/dashboard', icon: <RxComponentPlaceholder />, active: false },
-		Skills: { href: '/admin/dashboard', icon: <RxComponentPlaceholder />, active: false },
-		File: { href: '/admin/dashboard', icon: <RxComponentPlaceholder />, active: false },
+		Users: { href: '/admin/users', icon: <RxComponentPlaceholder />, active: false },
+		Projects: { href: '/admin/projects', icon: <RxComponentPlaceholder />, active: false },
+		Skills: { href: '/admin/skills', icon: <RxComponentPlaceholder />, active: false },
 	},
 	Settings: {
-		Profile: { href: '/admin/dashboard', icon: <RxComponentPlaceholder />, active: false },
-		Settings: { href: '/admin/dashboard', icon: <RxComponentPlaceholder />, active: false },
-		Theme: { href: '/admin/dashboard', icon: <RxComponentPlaceholder />, active: false },
+		Profile: { href: '/admin/profile', icon: <RxComponentPlaceholder />, active: false },
 	},
 };
 
-const active = true;
-
 const drawer = (
 	<div className='px-4 py-4'>
-		<Toolbar className='mb-3'>
+		<Toolbar className='mb-3' disableGutters>
 			<Image src={Logo} alt='Logo' />
 		</Toolbar>
-
+		<Disclosure />
 		<Divider />
+
 		{Object.keys(MenuItems).map((mainHeading, index) => {
 			return (
 				<>
@@ -65,12 +60,13 @@ const drawer = (
 					<ul className='flex flex-col'>
 						{Object.keys(MenuItems[mainHeading]).map((subHeading, index2) => {
 							let icon = MenuItems[mainHeading][subHeading].icon;
+							let href = MenuItems[mainHeading][subHeading].href;
 							let isActive = MenuItems[mainHeading][subHeading].active;
 							return (
 								<li key={index2} className='group text-sm mb-1'>
-									<Link href='#' className={`${isActive ? 'bg-blue-200 font-semibold' : 'hover:bg-slate-100'} flex gap-4 items-center py-2 pr-2 pl-3 rounded `}>
+									<Link href={href} className={`${isActive ? 'bg-blue-200 font-semibold text-blue-800' : 'hover:bg-slate-100 text-blue-900'} flex gap-4 items-center py-2 pr-2 pl-3 rounded `}>
 										<RxComponentPlaceholder size='1.3em' className={isActive ? 'text-blue-800 font-extrabold' : ''} />
-										<span className={`${isActive ? 'pl-1' : 'group-hover:pl-1'} transition-all ease-in-out font-semibold text-blue-800`}>{subHeading}</span>
+										<span className={`${isActive ? 'pl-1' : 'group-hover:pl-1'} transition-all ease-in-out `}>{subHeading}</span>
 									</Link>
 								</li>
 							);

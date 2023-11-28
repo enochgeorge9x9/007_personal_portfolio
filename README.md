@@ -67,15 +67,16 @@ Personal Portfolio for show casing my projects and website.
 
 -   Semantic HTML5 markup
 -   Tailwind CSS
+-   HeadlessUI
+-   MaterialUI
 -   CSS custom properties
 -   Mobile-first workflow
--   Javascript
 -   PHP for Bank-end
 -   Nextjs Framework for frontend
 -   React-Form-Hook
 -   Linters: prettier and eslint
-
 ### Continued development
+
 
 Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
 
