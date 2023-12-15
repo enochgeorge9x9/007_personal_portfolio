@@ -1,24 +1,22 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
-import Link from 'next/link';
 import Logo from '@images/logo/logo-icon.svg';
 import Image from 'next/image';
-import { RxComponentPlaceholder } from 'react-icons/rx';
-import Disclosure from '@components/Disclosure';
 
-const drawerWidth = 280;
 
-interface Props {
-	isNavbarOpen: boolean;
-	setIsNavbarOpen: any;
-	window?: () => Window;
-}
+import DisclosureMenuLink from '@components/Dashboard/DisclosureMenuLink';
+import MenuLink from '@components/Dashboard/MenuLink';
 
+import { IoSpeedometerOutline, IoBriefcaseOutline } from 'react-icons/io5';
+import { HiOutlineUsers } from 'react-icons/hi2';
+import { LuLightbulb } from 'react-icons/lu';
+import { IconType } from 'react-icons';
+import { FiUser } from 'react-icons/fi';
 /*
 # TODO: Add these pages in the future
 Overview
@@ -29,64 +27,74 @@ Blogs: { href: '/admin/blogs', icon: <RxComponentPlaceholder />, active: false }
 File: { href: '/admin/file', icon: <RxComponentPlaceholder />, active: false },
 */
 
-const MenuItems: any = {
+
+
+const PortfolioDropdownLinks = {
+	Create: { href: '/admin/projects/create', active: true },
+	Update: { href: '/admin/projects/create', active: false },
+	Delete: { href: '/admin/projects/create', active: false },
+	Read: { href: '/admin/projects/create', active: false },
+};
+
+interface MenuItemsProps {
+	[key: string]: { [key: string]: { href: string; icon: IconType; active: boolean } };
+}
+
+const MenuItems: MenuItemsProps = {
 	Overview: {
-		Dashboard: { href: '/admin/dashboard', icon: <RxComponentPlaceholder />, active: true },
+		Dashboard: { href: '/admin/dashboard', icon: IoSpeedometerOutline, active: true },
 	},
 	Management: {
-		Users: { href: '/admin/users', icon: <RxComponentPlaceholder />, active: false },
-		Projects: { href: '/admin/projects', icon: <RxComponentPlaceholder />, active: false },
-		Skills: { href: '/admin/skills', icon: <RxComponentPlaceholder />, active: false },
+		Users: { href: '/admin/users', icon: HiOutlineUsers, active: false },
+		Projects: { href: '/admin/projects', icon: IoBriefcaseOutline, active: false },
+		Skills: { href: '/admin/skills', icon: LuLightbulb, active: false },
 	},
 	Settings: {
-		Profile: { href: '/admin/profile', icon: <RxComponentPlaceholder />, active: false },
+		Profile: { href: '/admin/profile', icon: FiUser, active: false },
 	},
 };
 
-const drawer = (
-	<div className='px-4 py-4'>
-		<Toolbar className='mb-3' disableGutters>
-			<Image src={Logo} alt='Logo' />
-		</Toolbar>
-		<Disclosure />
-		<Divider />
+interface SidebarProps {
+	isSidebarOpen: boolean;
+	setIsSidebarOpen: any;
+}
 
-		{Object.keys(MenuItems).map((mainHeading, index) => {
-			return (
-				<>
-					<h4 key={index} className='font-bold text-xs text-slate-500 my-3'>
-						{mainHeading.toUpperCase()}
-					</h4>
-					<ul className='flex flex-col'>
-						{Object.keys(MenuItems[mainHeading]).map((subHeading, index2) => {
-							let icon = MenuItems[mainHeading][subHeading].icon;
-							let href = MenuItems[mainHeading][subHeading].href;
-							let isActive = MenuItems[mainHeading][subHeading].active;
-							return (
-								<li key={index2} className='group text-sm mb-1'>
-									<Link href={href} className={`${isActive ? 'bg-blue-200 font-semibold text-blue-800' : 'hover:bg-slate-100 text-blue-900'} flex gap-4 items-center py-2 pr-2 pl-3 rounded `}>
-										<RxComponentPlaceholder size='1.3em' className={isActive ? 'text-blue-800 font-extrabold' : ''} />
-										<span className={`${isActive ? 'pl-1' : 'group-hover:pl-1'} transition-all ease-in-out `}>{subHeading}</span>
-									</Link>
-								</li>
-							);
-						})}
-					</ul>
-					<Divider />
-				</>
-			);
-		})}
-	</div>
-);
+const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }: SidebarProps) => {
+	const drawerWidth = 250;
 
-const Sidebar = ({ isNavbarOpen, setIsNavbarOpen }: Props) => {
-	// const { window } = props;
-	const [mobileOpen, setMobileOpen] = React.useState(false);
-	// Remove this const when copying and pasting into your project.
+
 	const container = window !== undefined ? () => window.document.body : undefined;
 
+	const drawer = (
+		<div className='px-4 py-4 duration-300'>
+			<Toolbar className='mb-3' disableGutters>
+				<Image src={Logo} alt='Logo' />
+			</Toolbar>
+
+			<Divider />
+
+			{Object.keys(MenuItems).map((mainHeading, index) => {
+				return (
+					<div key={index}>
+						<h4 className={`font-bold text-xs text-slate-500 my-3`}>{mainHeading.toUpperCase()}</h4>
+						<ul className='flex flex-col'>
+							{Object.keys(MenuItems[mainHeading]).map((subHeading, index2) => {
+								let href = MenuItems[mainHeading][subHeading].href;
+								let isActive = MenuItems[mainHeading][subHeading].active;
+								let Icon = MenuItems[mainHeading][subHeading].icon;
+								return <MenuLink key={index2} href={href} isActive={isActive} title={subHeading} icon={Icon} isSidebarOpen={isSidebarOpen} />;
+							})}
+						</ul>
+						<Divider />
+					</div>
+				);
+			})}
+			<DisclosureMenuLink isSidebarOpen={isSidebarOpen} heading='Menu Dropdown' isActive={false} items={PortfolioDropdownLinks} />
+		</div>
+	);
+
 	const handleDrawerToggle = () => {
-		setIsNavbarOpen(!isNavbarOpen);
+		setIsSidebarOpen(!isSidebarOpen);
 	};
 
 	return (
@@ -101,10 +109,11 @@ const Sidebar = ({ isNavbarOpen, setIsNavbarOpen }: Props) => {
 			></AppBar>
 			<Box component='nav' sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label='mailbox folders'>
 				{/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+
 				<Drawer
 					container={container}
 					variant='temporary'
-					open={isNavbarOpen}
+					open={isSidebarOpen}
 					onClose={handleDrawerToggle}
 					ModalProps={{
 						keepMounted: true, // Better open performance on mobile.

@@ -3,6 +3,7 @@
 -   [ ] Navbar
 
 -   [ ] Sidebar
+    - [ ] Fix the Sidebar when the browser is full screen
     - [ ] Create a Component for NavLink
 
 -   [ ] Home Dashboard Page
